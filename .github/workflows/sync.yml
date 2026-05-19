@@ -17,12 +17,23 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Fetch dashboard from main repo
+        id: fetch
         run: |
-          curl -sSf \
+          if curl -sSf \
             "https://raw.githubusercontent.com/Favourolu/afriterminal/main/ops_dashboard_index.html" \
-            -o index_new.html
+            -o index_raw.html; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Source file not yet on main — skipping sync"
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Patch with status-site additions
+        if: steps.fetch.outputs.ok == 'true'
+        run: python3 patch.py index_raw.html > index_new.html
 
       - name: Check for changes
+        if: steps.fetch.outputs.ok == 'true'
         id: diff
         run: |
           if diff -q index.html index_new.html > /dev/null 2>&1; then
@@ -32,7 +43,7 @@ jobs:
           fi
 
       - name: Commit updated dashboard
-        if: steps.diff.outputs.changed == 'true'
+        if: steps.fetch.outputs.ok == 'true' && steps.diff.outputs.changed == 'true'
         run: |
           cp index_new.html index.html
           git config user.name "github-actions[bot]"
