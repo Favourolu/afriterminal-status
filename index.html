@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AfriTerminal Ops · Internal Status</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' rx='6.5' fill='%230d1f35' stroke='%2300d4aa' stroke-width='1.5'/%3E%3Crect x='5' y='18' width='4' height='7' rx='1' fill='%2300d4aa' opacity='.55'/%3E%3Crect x='12' y='13' width='4' height='12' rx='1' fill='%2300d4aa' opacity='.75'/%3E%3Crect x='19' y='8' width='4' height='17' rx='1' fill='%2300d4aa'/%3E%3Ccircle cx='21' cy='6' r='2.2' fill='%2300d4aa'/%3E%3C/svg%3E" />
   <link rel="apple-touch-icon" href="/icon-192.png" />
   <link rel="manifest" href="/manifest.json" />
@@ -11,6 +9,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="AT Ops" />
   <meta name="theme-color" content="#0d1424" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AfriTerminal Ops · Internal Status</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -84,6 +84,27 @@
       gap: 0.75rem;
     }
 
+    .header-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--border-solid);
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      padding: 0.375rem 0.875rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-logout:hover { color: var(--text); border-color: var(--text-dim); }
+
     .header-logo {
       font-size: 1rem;
       font-weight: 700;
@@ -121,21 +142,6 @@
       font-size: 0.6875rem;
     }
 
-    .logout-btn {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.25rem 0.625rem;
-      transition: color 0.2s, border-color 0.2s;
-      white-space: nowrap;
-    }
-
-    .logout-btn:hover {
-      color: var(--text);
-      border-color: var(--border-solid);
-    }
 
     /* ── Main content ─────────────────────────────────────────────── */
     .main {
@@ -608,36 +614,39 @@
     }
 
     @media (max-width: 600px) {
-      .main { padding: 0.875rem; }
-      .overview-grid { grid-template-columns: repeat(2, 1fr); gap: 0.625rem; }
-      .stat-card { padding: 1rem 1.125rem; }
-      .stat-value { font-size: 1.5rem; }
-      .stat-sub { font-size: 0.6875rem; }
+      .main { padding: 1rem; }
+      .overview-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .stat-value { font-size: 1.625rem; }
       .scraper-grid { grid-template-columns: 1fr; }
-      /* hide Last Updated column on narrow screens */
       .data-table th:nth-child(5),
       .data-table td:nth-child(5) { display: none; }
       .header { padding: 0 1rem; }
       .header-logo { font-size: 0.875rem; }
-      .badge-internal { display: none; }
-      .logout-btn { padding: 0.25rem 0.5rem; font-size: 0.6875rem; }
-      .scraper-card { padding: 1rem; }
-      .scraper-stats { gap: 0.375rem; }
-      .scraper-stat-item { padding: 0.375rem 0.5rem; }
     }
 
     @media (max-width: 400px) {
-      .main { padding: 0.75rem; }
       .overview-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-      .stat-card { padding: 0.875rem; }
-      .stat-value { font-size: 1.375rem; }
-      /* hide Rows column too on very small screens */
-      .data-table th:nth-child(3),
-      .data-table td:nth-child(3) { display: none; }
+      .stat-card { padding: 1rem; }
     }
 
     /* ── Table scroll on small screens ────────────────────────────── */
     .table-scroll { overflow-x: auto; }
+    .logout-btn {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.25rem 0.625rem;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .logout-btn:hover {
+      color: var(--text);
+      border-color: var(--border-solid);
+    }
+
   </style>
 </head>
 <body>
@@ -648,7 +657,27 @@
   <!-- Header -->
   <header class="header">
     <div class="header-left">
-      <!-- AfriTerminal logo icon -->
+      <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+        <defs>
+          <linearGradient id="hbg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0d1224"/><stop offset="100%" stop-color="#111827"/>
+          </linearGradient>
+          <linearGradient id="hbar" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#00d4aa"/><stop offset="100%" stop-color="#3b82f6"/>
+          </linearGradient>
+          <linearGradient id="hborder" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00d4aa" stop-opacity="0.6"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="11" fill="url(#hbg)"/>
+        <rect x="0.75" y="0.75" width="46.5" height="46.5" rx="10.25" fill="none" stroke="url(#hborder)" stroke-width="1.5"/>
+        <rect x="7"  y="30" width="7" height="11" rx="2" fill="url(#hbar)" opacity="0.55"/>
+        <rect x="17" y="22" width="7" height="19" rx="2" fill="url(#hbar)" opacity="0.75"/>
+        <rect x="27" y="14" width="7" height="27" rx="2" fill="url(#hbar)"/>
+        <polyline points="10.5,30 20.5,22 30.5,14 40,8" stroke="#00d4aa" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" stroke-dasharray="3,2"/>
+        <circle cx="40" cy="8" r="3.5" fill="#00d4aa"/>
+        <circle cx="40" cy="8" r="2" fill="#fff" opacity="0.9"/>
+      </svg>
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0">
         <rect x="0.75" y="0.75" width="28.5" height="28.5" rx="6.5" fill="#0d1f35" stroke="#00d4aa" stroke-width="1.5"/>
         <rect x="6"  y="19" width="4" height="6"  rx="1" fill="#00d4aa" opacity="0.55"/>
@@ -664,7 +693,7 @@
         <span class="live-dot"></span>
         Updated <span id="last-updated-time">—</span>
       </div>
-      <a href="/cdn-cgi/access/logout" class="logout-btn">Sign out</a>
+      <a class="btn-logout" href="/cdn-cgi/access/logout">Logout</a>
     </div>
   </header>
 
