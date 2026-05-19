@@ -114,6 +114,21 @@
       font-size: 0.6875rem;
     }
 
+    .logout-btn {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.25rem 0.625rem;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .logout-btn:hover {
+      color: var(--text);
+      border-color: var(--border-solid);
+    }
 
     /* ── Main content ─────────────────────────────────────────────── */
     .main {
@@ -613,6 +628,14 @@
   <!-- Header -->
   <header class="header">
     <div class="header-left">
+      <!-- AfriTerminal logo icon -->
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0">
+        <rect x="0.75" y="0.75" width="28.5" height="28.5" rx="6.5" fill="#0d1f35" stroke="#00d4aa" stroke-width="1.5"/>
+        <rect x="6"  y="19" width="4" height="6"  rx="1" fill="#00d4aa" opacity="0.55"/>
+        <rect x="13" y="14" width="4" height="11" rx="1" fill="#00d4aa" opacity="0.75"/>
+        <rect x="20" y="9"  width="4" height="16" rx="1" fill="#00d4aa"/>
+        <circle cx="22" cy="7" r="2.2" fill="#00d4aa"/>
+      </svg>
       <span class="header-logo">AfriTerminal Ops</span>
       <span class="badge-internal">Internal</span>
     </div>
@@ -621,6 +644,7 @@
         <span class="live-dot"></span>
         Updated <span id="last-updated-time">—</span>
       </div>
+      <a href="/cdn-cgi/access/logout" class="logout-btn">Sign out</a>
     </div>
   </header>
 
