@@ -5,6 +5,7 @@ fetched from the main repo. Run by sync.yml before committing.
 
 Usage: python3 patch.py index_raw.html > index_new.html
 """
+import re
 import sys
 
 FAVICON_SVG = (
@@ -64,10 +65,13 @@ def patch(html: str) -> str:
     if '.logout-btn' not in html:
         html = html.replace('  </style>', LOGOUT_CSS + '\n\n  </style>', 1)
 
-    # 3. Logo SVG before the .header-logo span
+    # 3. Logo SVG — strip any existing SVG in the header-left, then inject ours
     logo_marker = '      <span class="header-logo">'
-    if logo_marker in html and 'fill="#0d1f35"' not in html:
-        html = html.replace(logo_marker, LOGO_SVG + '\n' + logo_marker, 1)
+    if logo_marker in html:
+        # Remove any SVG element that immediately precedes the header-logo span
+        html = re.sub(r'<svg[\s\S]*?</svg>\s*\n\s*(?=\s*<span class="header-logo">)', '', html)
+        if 'circle cx="22"' not in html:
+            html = html.replace(logo_marker, LOGO_SVG + '\n' + logo_marker, 1)
 
     # 4. Logout button before the closing </div></header>
     logout_marker = '\n    </div>\n  </header>'
