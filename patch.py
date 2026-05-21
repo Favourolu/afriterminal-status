@@ -59,12 +59,33 @@ MOBILE_CSS = """\
       .badge-internal { display: none; }
       .header-logo { font-size: 0.875rem; }
       .logout-btn { padding: 0.25rem 0.5rem; font-size: 0.6875rem; }
-      .data-table th:nth-child(3),
-      .data-table td:nth-child(3),
-      .data-table th:nth-child(4),
-      .data-table td:nth-child(4),
-      .data-table th:nth-child(5),
+      .overview-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .scraper-grid { grid-template-columns: 1fr; }
+
+      /* Freshness table → stacked card rows on mobile */
+      .data-table { display: block; }
+      .data-table thead { display: none; }
+      .data-table tbody { display: block; }
+      .data-table tbody tr {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0.25rem 0.75rem;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .data-table tbody tr:last-child { border-bottom: none; }
+      .data-table td { display: block; padding: 0; border: none; }
+      /* Source name — top left */
+      .data-table td:nth-child(1) { grid-column: 1; grid-row: 1; }
+      /* Age bar — full width second row */
+      .data-table td:nth-child(2) { grid-column: 1 / 3; grid-row: 2; min-width: 0; }
+      /* Rows — hidden */
+      .data-table td:nth-child(3) { display: none; }
+      /* Status — top right */
+      .data-table td:nth-child(4) { grid-column: 2; grid-row: 1; }
+      /* Last Updated — hidden */
       .data-table td:nth-child(5) { display: none; }
+      .age-cell { min-width: 0; }
     }"""
 
 
