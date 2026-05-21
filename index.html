@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AfriTerminal Ops · Internal Status</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' rx='6.5' fill='%230d1f35' stroke='%2300d4aa' stroke-width='1.5'/%3E%3Crect x='5' y='18' width='4' height='7' rx='1' fill='%2300d4aa' opacity='.55'/%3E%3Crect x='12' y='13' width='4' height='12' rx='1' fill='%2300d4aa' opacity='.75'/%3E%3Crect x='19' y='8' width='4' height='17' rx='1' fill='%2300d4aa'/%3E%3Ccircle cx='21' cy='6' r='2.2' fill='%2300d4aa'/%3E%3C/svg%3E" />
   <link rel="apple-touch-icon" href="/icon-192.png" />
   <link rel="manifest" href="/manifest.json" />
@@ -11,6 +9,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="AT Ops" />
   <meta name="theme-color" content="#0d1424" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AfriTerminal Ops · Internal Status</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -84,6 +84,27 @@
       gap: 0.75rem;
     }
 
+    .header-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--border-solid);
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      padding: 0.375rem 0.875rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-logout:hover { color: var(--text); border-color: var(--text-dim); }
+
     .header-logo {
       font-size: 1rem;
       font-weight: 700;
@@ -121,21 +142,6 @@
       font-size: 0.6875rem;
     }
 
-    .logout-btn {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.25rem 0.625rem;
-      transition: color 0.2s, border-color 0.2s;
-      white-space: nowrap;
-    }
-
-    .logout-btn:hover {
-      color: var(--text);
-      border-color: var(--border-solid);
-    }
 
     /* ── Main content ─────────────────────────────────────────────── */
     .main {
@@ -608,40 +614,44 @@
     }
 
     @media (max-width: 600px) {
-      .main { padding: 0.875rem; }
-      .overview-grid { grid-template-columns: repeat(2, 1fr); gap: 0.625rem; }
-      .stat-card { padding: 1rem 1.125rem; }
-      .stat-value { font-size: 1.5rem; }
-      .stat-sub { font-size: 0.6875rem; }
+      .main { padding: 1rem; }
+      .overview-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .stat-value { font-size: 1.625rem; }
       .scraper-grid { grid-template-columns: 1fr; }
-      /* on mobile keep only Source + Age — hide Rows, Status, Last Updated */
+      .badge-internal { display: none; }
+      .header-logo { font-size: 0.875rem; }
+      .header { padding: 0 1rem; }
       .data-table th:nth-child(3),
       .data-table td:nth-child(3),
       .data-table th:nth-child(4),
       .data-table td:nth-child(4),
       .data-table th:nth-child(5),
       .data-table td:nth-child(5) { display: none; }
-      .header { padding: 0 1rem; }
-      .header-logo { font-size: 0.875rem; }
-      .badge-internal { display: none; }
-      .logout-btn { padding: 0.25rem 0.5rem; font-size: 0.6875rem; }
-      .scraper-card { padding: 1rem; }
-      .scraper-stats { gap: 0.375rem; }
-      .scraper-stat-item { padding: 0.375rem 0.5rem; }
     }
 
     @media (max-width: 400px) {
-      .main { padding: 0.75rem; }
       .overview-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-      .stat-card { padding: 0.875rem; }
-      .stat-value { font-size: 1.375rem; }
-      /* hide Rows column too on very small screens */
-      .data-table th:nth-child(3),
-      .data-table td:nth-child(3) { display: none; }
+      .stat-card { padding: 1rem; }
     }
 
     /* ── Table scroll on small screens ────────────────────────────── */
     .table-scroll { overflow-x: auto; }
+    .logout-btn {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.25rem 0.625rem;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .logout-btn:hover {
+      color: var(--text);
+      border-color: var(--border-solid);
+    }
+
   </style>
 </head>
 <body>
@@ -652,7 +662,6 @@
   <!-- Header -->
   <header class="header">
     <div class="header-left">
-      <!-- AfriTerminal logo icon -->
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0">
         <rect x="0.75" y="0.75" width="28.5" height="28.5" rx="6.5" fill="#0d1f35" stroke="#00d4aa" stroke-width="1.5"/>
         <rect x="6"  y="19" width="4" height="6"  rx="1" fill="#00d4aa" opacity="0.55"/>
@@ -668,7 +677,7 @@
         <span class="live-dot"></span>
         Updated <span id="last-updated-time">—</span>
       </div>
-      <a href="/cdn-cgi/access/logout" class="logout-btn">Sign out</a>
+      <a class="btn-logout" href="/cdn-cgi/access/logout">Logout</a>
     </div>
   </header>
 
@@ -962,25 +971,31 @@ const HEALTH_LABELS = {
   crypto:          'Crypto (CoinGecko)',
   commodities:     'Commodities',
   african_exchanges: 'African Exchanges',
-  macro_worldbank: 'Macro / World Bank',
+  macro_worldbank: 'Macro Data',
   imf:             'IMF Data',
   cbn:             'CBN Data',
   nbs:             'NBS Data',
   jse:             'JSE (Johannesburg)',
-  ngx_market:      'NGX Market Data',
+  ngx_market:      'NGX Market Summary',
   ngx_breadth:     'NGX Breadth',
   ngx_live:        'NGX Live Prices',
   filings:         'NGX Filings',
   global_markets:  'Global Markets',
   market_flows:    'Market Flows',
-  bonds:           'Bonds & Fixed Income',
+  bonds:           'Bonds Data',
   brvm:            'BRVM West Africa',
   digest:          'Daily Digest',
   fx_rates:        'FX Rates',
+  fx_history:      'FX History',
   market_intelligence: 'Market Intelligence',
   news_intelligence: 'News Intelligence',
+  news_data:       'News Data',
   sector_indices:  'Sector Indices',
   global_indices:  'Global Indices',
+  ngx_asi_api:     'NGX ASI API',
+  ngx_filings_api: 'NGX Filings API',
+  coingecko:       'CoinGecko',
+  fx_api:          'Open Exchange Rates (FX)',
 };
 
 function getRowCount(entry) {
