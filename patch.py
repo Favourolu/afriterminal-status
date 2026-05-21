@@ -54,6 +54,19 @@ LOGOUT_CSS = """\
       border-color: var(--border-solid);
     }"""
 
+MOBILE_CSS = """\
+    @media (max-width: 600px) {
+      .badge-internal { display: none; }
+      .header-logo { font-size: 0.875rem; }
+      .logout-btn { padding: 0.25rem 0.5rem; font-size: 0.6875rem; }
+      .data-table th:nth-child(3),
+      .data-table td:nth-child(3),
+      .data-table th:nth-child(4),
+      .data-table td:nth-child(4),
+      .data-table th:nth-child(5),
+      .data-table td:nth-child(5) { display: none; }
+    }"""
+
 
 def patch(html: str) -> str:
     # 1. Head tags after <meta charset>
@@ -61,9 +74,11 @@ def patch(html: str) -> str:
     if 'rel="manifest"' not in html and charset in html:
         html = html.replace(charset, charset + '\n' + HEAD_INJECT, 1)
 
-    # 2. Logout button CSS before closing </style>
+    # 2. Logout button CSS + mobile overrides before closing </style>
     if '.logout-btn' not in html:
         html = html.replace('  </style>', LOGOUT_CSS + '\n\n  </style>', 1)
+    if 'badge-internal { display: none' not in html:
+        html = html.replace('  </style>', MOBILE_CSS + '\n\n  </style>', 1)
 
     # 3. Logo SVG — strip any existing SVG in the header-left, then inject ours
     logo_marker = '      <span class="header-logo">'

@@ -614,7 +614,11 @@
       .stat-value { font-size: 1.5rem; }
       .stat-sub { font-size: 0.6875rem; }
       .scraper-grid { grid-template-columns: 1fr; }
-      /* hide Last Updated column on narrow screens */
+      /* on mobile keep only Source + Age — hide Rows, Status, Last Updated */
+      .data-table th:nth-child(3),
+      .data-table td:nth-child(3),
+      .data-table th:nth-child(4),
+      .data-table td:nth-child(4),
       .data-table th:nth-child(5),
       .data-table td:nth-child(5) { display: none; }
       .header { padding: 0 1rem; }
